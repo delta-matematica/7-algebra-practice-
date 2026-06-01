@@ -6,28 +6,440 @@
   <title>Algebra Practice Test</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{min-height:100vh;overflow-x:hidden;overflow-y:auto;font-family:"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at top,#123f70 0%,#071a33 45%,#020916 100%);color:white}
-    .screen{position:relative;width:100vw;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:visible;padding:40px 24px 70px}
-    .animated-bg{position:absolute;inset:0;overflow:hidden;z-index:1}.grid{position:absolute;inset:-80px;background-image:linear-gradient(rgba(87,214,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(87,214,255,.08) 1px,transparent 1px);background-size:46px 46px;animation:moveGrid 18s linear infinite;transform:rotate(-2deg)}
+    body{min-height:100vh;overflow:hidden;font-family:"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at top,#123f70 0%,#071a33 45%,#020916 100%);color:white}
+    .screen{position:relative;width:100vw;height:100vh;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:16px}
+    .animated-bg{position:absolute;inset:0;overflow:hidden;z-index:1}
+    .grid{position:absolute;inset:-80px;background-image:linear-gradient(rgba(87,214,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(87,214,255,.08) 1px,transparent 1px);background-size:46px 46px;animation:moveGrid 18s linear infinite;transform:rotate(-2deg)}
     @keyframes moveGrid{from{transform:translate(0,0) rotate(-2deg)}to{transform:translate(46px,46px) rotate(-2deg)}}
     .math-symbol{position:absolute;color:rgba(255,255,255,.16);font-weight:700;user-select:none;white-space:nowrap;text-shadow:0 0 18px rgba(88,215,255,.25);animation:floatMath linear infinite}
     @keyframes floatMath{0%{transform:translateY(110vh) rotate(0deg) scale(.9);opacity:0}10%,85%{opacity:1}100%{transform:translateY(-25vh) rotate(360deg) scale(1.15);opacity:0}}
-    .equation-stream{position:absolute;left:-30%;width:160%;color:rgba(255,214,87,.16);font-family:Georgia,serif;font-weight:700;letter-spacing:2px;white-space:nowrap;animation:streamMove linear infinite}@keyframes streamMove{from{transform:translateX(-25%)}to{transform:translateX(25%)}}
-    .orb{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(78,209,255,.33),rgba(78,209,255,0));filter:blur(1px);animation:pulseOrb ease-in-out infinite alternate}@keyframes pulseOrb{from{transform:scale(.8);opacity:.25}to{transform:scale(1.25);opacity:.65}}
-    .main-card,.form-card,.result-card,.test-card{position:relative;z-index:5;width:min(900px,88vw);padding:56px 52px 48px;border-radius:34px;background:linear-gradient(145deg,rgba(255,255,255,.18),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.22);box-shadow:0 35px 90px rgba(0,0,0,.42),inset 0 0 28px rgba(255,255,255,.07);backdrop-filter:blur(18px);text-align:center;overflow:hidden}.test-card{width:min(1120px,94vw);padding:32px;text-align:left}
-    .main-card::before,.form-card::before,.result-card::before,.test-card::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.14),transparent);transform:translateX(-100%);animation:shine 5s ease-in-out infinite;pointer-events:none}@keyframes shine{0%,45%{transform:translateX(-100%)}70%,100%{transform:translateX(100%)}}
-    .top-label{display:inline-block;padding:10px 22px;border-radius:999px;background:rgba(72,215,255,.16);border:1px solid rgba(99,225,255,.44);color:#8eeeff;font-size:.9rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:26px;box-shadow:0 0 22px rgba(72,215,255,.18)}
-    h1{font-size:clamp(3rem,7vw,6.3rem);line-height:.95;letter-spacing:3px;font-weight:900;text-transform:uppercase;text-shadow:0 8px 24px rgba(0,0,0,.35)}h2{font-size:clamp(2rem,4vw,3.5rem);color:#ffd75b;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}.title-highlight{display:block;color:#ffd75b;text-shadow:0 0 22px rgba(255,215,91,.38),0 8px 24px rgba(0,0,0,.35)}.subtitle{margin:24px auto 0;max-width:650px;font-size:clamp(1rem,2vw,1.25rem);line-height:1.65;color:rgba(255,255,255,.82)}
-    .info-row{margin:34px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:680px}.info-box{padding:15px 12px;border-radius:18px;background:rgba(3,15,35,.42);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.88);font-weight:700;font-size:.95rem}.info-box span{display:block;color:#78e8ff;font-size:.76rem;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:5px}
-    .start-button,.small-button{position:relative;margin-top:34px;padding:15px 42px;border:0;border-radius:999px;background:linear-gradient(135deg,#ffd75b,#ffb52e);color:#09213d;font-size:1rem;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;cursor:pointer;box-shadow:0 18px 35px rgba(255,184,46,.32);transition:.25s}.start-button:hover,.small-button:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 24px 45px rgba(255,184,46,.42)}
-    .form-grid{width:min(680px,100%);margin:30px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:16px}.input-group{text-align:left}.input-group label{display:block;margin-bottom:8px;color:#8eeeff;font-size:.82rem;font-weight:900;letter-spacing:1.6px;text-transform:uppercase}.input-group input{width:100%;padding:15px 18px;border-radius:16px;border:1px solid rgba(255,255,255,.24);outline:0;background:rgba(2,13,31,.55);color:white;font-size:1rem;font-weight:700;text-transform:uppercase}.input-group input:focus{border-color:#ffd75b;box-shadow:0 0 0 4px rgba(255,215,91,.14)}
-    .note{max-width:620px;margin:16px auto 0;color:rgba(255,255,255,.7);line-height:1.6;font-size:.98rem}.instruction-box{width:min(680px,100%);margin:26px auto 0;padding:22px 24px;border-radius:22px;background:rgba(2,13,31,.48);border:1px solid rgba(142,238,255,.22);text-align:left;color:rgba(255,255,255,.82);line-height:1.65;box-shadow:inset 0 0 22px rgba(120,232,255,.05)}.instruction-box h3{color:#ffd75b;font-size:1rem;text-transform:uppercase;letter-spacing:1.6px;margin-bottom:12px}.instruction-box ul{padding-left:22px}.instruction-box li{margin:8px 0}.timer-badge{display:inline-block;margin-top:16px;padding:10px 18px;border-radius:999px;background:rgba(255,215,91,.14);border:1px solid rgba(255,215,91,.36);color:#ffd75b;font-weight:900;letter-spacing:1px}.student-name-result{margin:12px auto 0;font-size:clamp(1.35rem,3vw,2.3rem);font-weight:950;color:white;letter-spacing:1px;text-transform:uppercase}.result-number{margin-top:22px;font-size:clamp(4rem,10vw,8rem);color:#ffd75b;font-weight:950;line-height:.95;text-shadow:0 0 28px rgba(255,215,91,.28)}
-    .test-header{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap}.question-count{color:#8eeeff;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}.test-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:stretch}.question-panel,.choices-panel{min-height:390px;padding:28px;border-radius:26px;background:rgba(2,13,31,.55);border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 0 24px rgba(120,232,255,.06)}.panel-label{display:inline-block;margin-bottom:18px;padding:8px 14px;border-radius:999px;background:rgba(142,238,255,.12);border:1px solid rgba(142,238,255,.25);color:#8eeeff;font-size:.78rem;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}.question-text{font-size:clamp(1.35rem,2.4vw,2rem);line-height:1.45;font-weight:950;color:white;letter-spacing:.2px}.question-text mjx-container{font-weight:950!important}.question-text svg{filter:drop-shadow(0 0 0 white)}
-    .choice-button{width:100%;display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:14px 14px;border-radius:18px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:white;cursor:pointer;font-size:1rem;font-weight:900;text-align:left;transition:.2s}.choice-button:hover{transform:translateY(-2px);border-color:rgba(255,215,91,.55);background:rgba(255,255,255,.13)}.choice-button.selected{background:rgba(255,215,91,.2);border-color:rgba(255,215,91,.9);box-shadow:0 0 0 3px rgba(255,215,91,.1)}.choice-button mjx-container{font-size:108%!important;max-width:100%;overflow:visible}.choice-letter{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(142,238,255,.16);color:#8eeeff;flex:0 0 auto}
-    .test-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}.nav-button,.submit-button{padding:12px 24px;border:0;border-radius:999px;font-weight:900;letter-spacing:1.1px;text-transform:uppercase;cursor:pointer}.nav-button{background:rgba(142,238,255,.14);border:1px solid rgba(142,238,255,.3);color:#8eeeff}.submit-button{background:linear-gradient(135deg,#ffd75b,#ffb52e);color:#09213d;box-shadow:0 14px 28px rgba(255,184,46,.25)}.nav-button:disabled{opacity:.35;cursor:not-allowed}.progress-strip{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:20px}.progress-dot{width:26px;height:26px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:rgba(255,255,255,.75);font-size:.76rem;font-weight:900;cursor:pointer}.progress-dot.answered{background:rgba(142,238,255,.2);color:#8eeeff;border-color:rgba(142,238,255,.42)}.progress-dot.active{background:rgba(255,215,91,.28);color:#ffd75b;border-color:rgba(255,215,91,.75)}
-    .io-wrapper,.geometry-box{width:100%;margin:8px 0 18px}.io-title{font-size:.9rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#8eeeff;margin-bottom:10px}.io-stage{position:relative;width:100%;max-width:420px;height:175px;margin:0 auto;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);overflow:hidden}.io-svg{width:100%;height:100%;display:block}.io-caption{position:absolute;color:#8eeeff;font-size:.68rem;font-weight:900;letter-spacing:1px;text-transform:uppercase}.io-caption.input-cap{left:31px;top:22px}.io-caption.rule-cap{left:185px;top:20px}.io-caption.output-cap{right:30px;top:22px}.io-tag{position:absolute;display:flex;align-items:center;justify-content:center;padding:0;border-radius:0;background:transparent;border:none;color:white;font-weight:900;text-align:center;white-space:nowrap}.io-tag mjx-container{font-size:100%!important;font-weight:900!important}.io-input{left:20px;top:65px;width:76px;min-height:34px;font-size:.82rem}.io-rule{left:147px;top:54px;width:135px;height:58px;font-size:.9rem;background:transparent;border:none}.io-rule mjx-container{font-size:112%!important}.io-output{right:22px;top:61px;width:60px;height:46px;font-size:1.2rem;color:#ffd75b;background:transparent;border:none}.geometry-stage{position:relative;width:100%;max-width:420px;height:220px;margin:0 auto;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);overflow:hidden}.geom-svg{width:100%;height:100%;display:block}.geom-label{position:absolute;padding:4px 9px;border-radius:12px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:white;font-weight:900;font-size:.92rem;text-align:center;white-space:nowrap}.geom-label mjx-container{font-size:105%!important}
-    .corner-equation{position:absolute;z-index:4;color:rgba(255,255,255,.22);font-size:clamp(1.3rem,3vw,2.7rem);font-family:Georgia,serif;font-weight:700;text-shadow:0 0 20px rgba(87,214,255,.16);animation:gentleFloat 5s ease-in-out infinite alternate}.eq1{top:9%;left:7%}.eq2{bottom:11%;right:8%;animation-delay:1.2s}.eq3{top:13%;right:9%;animation-delay:2.1s;color:rgba(255,215,91,.22)}.eq4{bottom:12%;left:9%;animation-delay:.8s;color:rgba(255,215,91,.19)}@keyframes gentleFloat{from{transform:translateY(-8px) rotate(-2deg)}to{transform:translateY(10px) rotate(2deg)}}.footer{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:5;color:rgba(255,255,255,.55);font-size:.78rem;letter-spacing:1.2px;text-transform:uppercase;width:100%;text-align:center;padding:0 14px}
-    @media(max-width:720px){.main-card,.form-card,.result-card,.test-card{padding:34px 22px 32px;border-radius:26px;width:min(94vw,900px)}.info-row,.form-grid,.test-layout{grid-template-columns:1fr}.question-panel,.choices-panel{min-height:auto;padding:22px}.io-stage{max-width:100%;height:158px}.io-caption{font-size:.58rem}.io-caption.input-cap{left:18px;top:20px}.io-caption.rule-cap{left:136px;top:18px}.io-caption.output-cap{right:18px;top:20px}.io-input{left:12px;top:64px;width:64px;font-size:.72rem}.io-rule{left:108px;top:54px;width:118px;height:50px;font-size:.74rem}.io-output{right:12px;top:60px;width:52px;height:42px;font-size:1rem}.geometry-stage{max-width:100%;height:200px}.geom-label{font-size:.88rem;padding:3px 8px}.corner-equation{display:none}}
+    .equation-stream{position:absolute;left:-30%;width:160%;color:rgba(255,214,87,.16);font-family:Georgia,serif;font-weight:700;letter-spacing:2px;white-space:nowrap;animation:streamMove linear infinite}
+    @keyframes streamMove{from{transform:translateX(-25%)}to{transform:translateX(25%)}}
+    .orb{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(78,209,255,.33),rgba(78,209,255,0));filter:blur(1px);animation:pulseOrb ease-in-out infinite alternate}
+    @keyframes pulseOrb{from{transform:scale(.8);opacity:.25}to{transform:scale(1.25);opacity:.65}}
+
+    .main-card,.form-card,.result-card,.test-card{
+      position:relative;z-index:5;width:min(96vw,1600px);height:min(90vh,900px);aspect-ratio:16/9;
+      padding:42px 54px;border-radius:34px;background:linear-gradient(145deg,rgba(255,255,255,.18),rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.22);box-shadow:0 35px 90px rgba(0,0,0,.42),inset 0 0 28px rgba(255,255,255,.07);
+      backdrop-filter:blur(18px);text-align:center;overflow:hidden
+    }
+    .test-card{display:flex;flex-direction:column;text-align:left}
+    .main-card::before,.form-card::before,.result-card::before,.test-card::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.14),transparent);transform:translateX(-100%);animation:shine 5s ease-in-out infinite;pointer-events:none}
+    @keyframes shine{0%,45%{transform:translateX(-100%)}70%,100%{transform:translateX(100%)}}
+
+    .top-label{display:inline-block;padding:12px 28px;border-radius:999px;background:rgba(72,215,255,.16);border:1px solid rgba(99,225,255,.44);color:#8eeeff;font-size:1.15rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:26px;box-shadow:0 0 22px rgba(72,215,255,.18)}
+    h1{font-size:clamp(5rem,8vw,8.5rem);line-height:.95;letter-spacing:3px;font-weight:900;text-transform:uppercase;text-shadow:0 8px 24px rgba(0,0,0,.35)}
+    h2{font-size:clamp(3rem,5vw,5.2rem);color:#ffd75b;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+    .title-highlight{display:block;color:#ffd75b;text-shadow:0 0 22px rgba(255,215,91,.38),0 8px 24px rgba(0,0,0,.35)}
+    .subtitle{margin:24px auto 0;max-width:980px;font-size:clamp(1.4rem,2vw,2rem);line-height:1.55;color:rgba(255,255,255,.82)}
+
+    .info-row{margin:34px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:980px}
+    .info-box{padding:22px 18px;border-radius:18px;background:rgba(3,15,35,.42);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.88);font-weight:700;font-size:1.25rem}
+    .info-box span{display:block;color:#78e8ff;font-size:.95rem;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:5px}
+
+    .start-button,.small-button,.nav-button,.submit-button{position:relative;padding:18px 44px;border:0;border-radius:999px;font-size:1.25rem;font-weight:900;letter-spacing:1.1px;text-transform:uppercase;cursor:pointer}
+    .start-button,.small-button,.submit-button{background:linear-gradient(135deg,#ffd75b,#ffb52e);color:#09213d;box-shadow:0 18px 35px rgba(255,184,46,.32)}
+    .start-button,.small-button{margin-top:34px}
+    .start-button:hover,.small-button:hover,.submit-button:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 24px 45px rgba(255,184,46,.42)}
+    .nav-button{background:rgba(142,238,255,.14);border:1px solid rgba(142,238,255,.3);color:#8eeeff}
+    .nav-button:disabled{opacity:.35;cursor:not-allowed}
+
+    .form-grid{width:min(980px,100%);margin:22px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    .input-group{text-align:left}
+    .input-group label{display:block;margin-bottom:8px;color:#8eeeff;font-size:1.05rem;font-weight:900;letter-spacing:1.6px;text-transform:uppercase}
+    .input-group input{width:100%;padding:20px 22px;border-radius:16px;border:1px solid rgba(255,255,255,.24);outline:0;background:rgba(2,13,31,.55);color:white;font-size:1.35rem;font-weight:700;text-transform:uppercase}
+    .input-group input:focus{border-color:#ffd75b;box-shadow:0 0 0 4px rgba(255,215,91,.14)}
+    .note{max-width:1000px;margin:16px auto 0;color:rgba(255,255,255,.7);line-height:1.6;font-size:1.15rem}
+    .instruction-box{width:min(1050px,100%);margin:14px auto 0;padding:16px 30px;border-radius:22px;background:rgba(2,13,31,.48);border:1px solid rgba(142,238,255,.22);text-align:left;color:rgba(255,255,255,.82);line-height:1.55;font-size:1.25rem;box-shadow:inset 0 0 22px rgba(120,232,255,.05)}
+    .instruction-box h3{color:#ffd75b;font-size:1.25rem;text-transform:uppercase;letter-spacing:1.6px;margin-bottom:12px}
+    .instruction-box ul{padding-left:22px}.instruction-box li{margin:3px 0}
+    .timer-badge{display:inline-block;padding:10px 22px;border-radius:999px;background:rgba(255,215,91,.14);border:1px solid rgba(255,215,91,.36);color:#ffd75b;font-weight:900;letter-spacing:1px;font-size:1.25rem}
+
+    .test-header{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+    .question-count{color:#8eeeff;font-size:1.35rem;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}
+    .test-layout{flex:1;display:grid;grid-template-columns:1.12fr .88fr;gap:28px;min-height:0}
+    .question-panel,.choices-panel{height:100%;min-height:0;padding:34px;border-radius:28px;background:rgba(2,13,31,.55);border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 0 24px rgba(120,232,255,.06);overflow:hidden}
+    .panel-label{display:inline-block;margin-bottom:20px;padding:10px 18px;border-radius:999px;background:rgba(142,238,255,.12);border:1px solid rgba(142,238,255,.25);color:#8eeeff;font-size:1rem;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}
+    .question-text{font-size:clamp(2rem,2.6vw,3rem);line-height:1.35;font-weight:950;color:white;letter-spacing:.2px}
+    .question-text mjx-container{font-weight:950!important}
+
+    .choice-button{width:100%;display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:22px;border-radius:22px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:white;cursor:pointer;font-size:1.55rem;font-weight:900;text-align:left;transition:.2s;min-height:76px}
+    .choice-button:hover{transform:translateY(-2px);border-color:rgba(255,215,91,.55);background:rgba(255,255,255,.13)}
+    .choice-button.selected{background:rgba(255,215,91,.2);border-color:rgba(255,215,91,.9);box-shadow:0 0 0 3px rgba(255,215,91,.1)}
+    .choice-letter{width:46px;height:46px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(142,238,255,.16);color:#8eeeff;flex:0 0 auto;font-size:1.35rem}
+    .choice-button mjx-container{font-size:120%!important;max-width:100%;overflow:visible}
+    .test-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .progress-strip{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+    .progress-dot{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:rgba(255,255,255,.75);font-size:.95rem;font-weight:900;cursor:pointer}
+    .progress-dot.answered{background:rgba(142,238,255,.2);color:#8eeeff;border-color:rgba(142,238,255,.42)}
+    .progress-dot.active{background:rgba(255,215,91,.28);color:#ffd75b;border-color:rgba(255,215,91,.75)}
+
+    .io-wrapper,.geometry-box{width:100%;margin:8px 0 18px}
+    .io-title{font-size:.95rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#8eeeff;margin-bottom:10px}
+    .io-stage{position:relative;width:100%;max-width:620px;height:230px;margin:0 auto;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);overflow:hidden}
+    .io-svg{width:100%;height:100%;display:block;transform:scale(1.38);transform-origin:center}
+    .io-caption{position:absolute;color:#8eeeff;font-size:.9rem;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+    .io-caption.input-cap{left:44px;top:28px}.io-caption.rule-cap{left:270px;top:26px}.io-caption.output-cap{right:42px;top:28px}
+    .io-tag{position:absolute;display:flex;align-items:center;justify-content:center;padding:0;background:transparent;border:none;color:white;font-weight:900;text-align:center;white-space:nowrap}
+    .io-input{left:28px;top:86px;width:110px;font-size:1.15rem}
+    .io-rule{left:220px;top:72px;width:180px;height:70px;font-size:1.15rem;background:transparent;border:none}
+    .io-output{right:34px;top:82px;width:76px;height:58px;font-size:1.6rem;color:#ffd75b;background:transparent;border:none}
+    .io-rule mjx-container{font-size:115%!important}
+
+    .geometry-stage{position:relative;width:100%;max-width:620px;height:300px;margin:0 auto;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);overflow:hidden}
+    .geom-svg{width:100%;height:100%;display:block}
+    .geom-label{position:absolute;padding:6px 14px;border-radius:12px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:white;font-weight:900;font-size:1.25rem;text-align:center;white-space:nowrap}
+    .geom-label mjx-container{font-size:115%!important;font-weight:900!important}
+
+    .student-name-result{margin:12px auto 0;font-size:clamp(2rem,3.5vw,3.5rem);font-weight:950;color:white;letter-spacing:1px;text-transform:uppercase}
+    .result-number{margin-top:22px;font-size:clamp(6rem,12vw,11rem);color:#ffd75b;font-weight:950;line-height:.95;text-shadow:0 0 28px rgba(255,215,91,.28)}
+    .result-card .note{font-size:1.6rem!important}
+    .corner-equation{position:absolute;z-index:4;color:rgba(255,255,255,.22);font-size:clamp(1.3rem,3vw,2.7rem);font-family:Georgia,serif;font-weight:700;text-shadow:0 0 20px rgba(87,214,255,.16);animation:gentleFloat 5s ease-in-out infinite alternate}
+    .eq1{top:9%;left:7%}.eq2{bottom:11%;right:8%;animation-delay:1.2s}.eq3{top:13%;right:9%;animation-delay:2.1s;color:rgba(255,215,91,.22)}.eq4{bottom:12%;left:9%;animation-delay:.8s;color:rgba(255,215,91,.19)}
+    @keyframes gentleFloat{from{transform:translateY(-8px) rotate(-2deg)}to{transform:translateY(10px) rotate(2deg)}}
+    .footer{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:5;color:rgba(255,255,255,.55);font-size:.9rem;letter-spacing:1.2px;text-transform:uppercase;width:100%;text-align:center;padding:0 14px}
+
+    @media(max-width:1100px){
+      .test-layout{grid-template-columns:1fr 1fr}
+      .question-text{font-size:clamp(1.7rem,2.4vw,2.4rem)}
+      .choice-button{font-size:1.25rem;min-height:62px;padding:16px 18px}
+      .io-stage{height:190px}.geometry-stage{height:250px}
+    }
+    @media(max-width:720px){
+      body{overflow:auto}
+      .screen{height:auto;min-height:100vh;overflow:visible;padding:20px}
+      .main-card,.form-card,.result-card,.test-card{height:auto;min-height:90vh;aspect-ratio:auto;padding:34px 22px 32px;border-radius:26px;width:min(94vw,900px)}
+      .info-row,.form-grid,.test-layout{grid-template-columns:1fr}
+      .question-panel,.choices-panel{min-height:auto;padding:22px;overflow:visible}
+      .io-stage{max-width:100%;height:158px}.io-svg{transform:scale(1)}
+      .io-caption{font-size:.58rem}.io-caption.input-cap{left:18px;top:20px}.io-caption.rule-cap{left:136px;top:18px}.io-caption.output-cap{right:18px;top:20px}
+      .io-input{left:12px;top:64px;width:64px;font-size:.72rem}.io-rule{left:108px;top:54px;width:118px;height:50px;font-size:.74rem}.io-output{right:12px;top:60px;width:52px;height:42px;font-size:1rem}
+      .geometry-stage{max-width:100%;height:200px}.geom-label{font-size:.88rem;padding:3px 8px}
+      .corner-equation{display:none}
+    }
+  
+/* Compact student-information slide for projector */
+.begin-title{
+  font-size:clamp(2.3rem,3.8vw,4rem) !important;
+  margin-bottom:8px !important;
+}
+
+.form-card .top-label{
+  margin-bottom:14px !important;
+}
+
+.form-card .small-button{
+  margin-top:18px !important;
+}
+
+.form-card{
+  padding-top:34px !important;
+  padding-bottom:30px !important;
+}
+
+  
+/* =========================================================
+   PROJECTOR QUESTION-SCREEN FIT FIX
+   Wider question panel, smaller fonts, visible figures
+   ========================================================= */
+
+.test-card{
+  padding:24px 34px 22px !important;
+}
+
+.test-header{
+  margin-bottom:8px !important;
+}
+
+.question-count{
+  font-size:1.12rem !important;
+}
+
+.test-header .note{
+  font-size:.95rem !important;
+  margin-top:2px !important;
+}
+
+.timer-badge{
+  font-size:1rem !important;
+  padding:8px 18px !important;
+}
+
+/* Make the question side wider and use the available height */
+.test-layout{
+  grid-template-columns:1.38fr .62fr !important;
+  gap:18px !important;
+  flex:1 1 auto !important;
+  min-height:0 !important;
+}
+
+.question-panel,
+.choices-panel{
+  padding:22px 24px !important;
+  border-radius:24px !important;
+  min-height:0 !important;
+  height:100% !important;
+}
+
+/* Let figures show instead of being cut off */
+.question-panel{
+  overflow:auto !important;
+}
+
+.choices-panel{
+  overflow:auto !important;
+}
+
+/* Smaller, still projector-readable question font */
+.panel-label{
+  font-size:.82rem !important;
+  padding:7px 13px !important;
+  margin-bottom:10px !important;
+}
+
+.question-text{
+  font-size:clamp(1.35rem,1.85vw,2.05rem) !important;
+  line-height:1.28 !important;
+}
+
+.question-text mjx-container{
+  font-size:108% !important;
+}
+
+/* Answer choices scaled proportionately */
+.choice-button{
+  font-size:1.12rem !important;
+  padding:13px 15px !important;
+  min-height:54px !important;
+  margin-bottom:10px !important;
+  border-radius:17px !important;
+  gap:10px !important;
+}
+
+.choice-letter{
+  width:34px !important;
+  height:34px !important;
+  font-size:1rem !important;
+}
+
+.choice-button mjx-container{
+  font-size:112% !important;
+}
+
+/* Smaller nav and progress so the middle area gets more room */
+.test-nav{
+  margin-top:8px !important;
+}
+
+.nav-button,
+.submit-button{
+  font-size:.95rem !important;
+  padding:9px 22px !important;
+}
+
+.progress-strip{
+  margin-top:8px !important;
+  gap:5px !important;
+}
+
+.progress-dot{
+  width:24px !important;
+  height:24px !important;
+  font-size:.72rem !important;
+  border-radius:6px !important;
+}
+
+/* Make figures fit naturally inside the question panel */
+.geometry-stage{
+  max-width:520px !important;
+  height:210px !important;
+  margin-bottom:8px !important;
+}
+
+.geom-label{
+  font-size:.98rem !important;
+  padding:4px 9px !important;
+}
+
+.geom-label mjx-container{
+  font-size:105% !important;
+}
+
+/* Input-output model fits inside the question panel */
+.io-stage{
+  max-width:520px !important;
+  height:185px !important;
+  margin-bottom:8px !important;
+}
+
+.io-svg{
+  transform:scale(1.08) !important;
+  transform-origin:center !important;
+}
+
+.io-caption{
+  font-size:.7rem !important;
+}
+
+.io-caption.input-cap{
+  left:32px !important;
+  top:24px !important;
+}
+
+.io-caption.rule-cap{
+  left:210px !important;
+  top:22px !important;
+}
+
+.io-caption.output-cap{
+  right:32px !important;
+  top:24px !important;
+}
+
+.io-input{
+  left:22px !important;
+  top:72px !important;
+  width:92px !important;
+  font-size:.9rem !important;
+}
+
+.io-rule{
+  left:170px !important;
+  top:62px !important;
+  width:150px !important;
+  height:56px !important;
+  font-size:.92rem !important;
+}
+
+.io-output{
+  right:26px !important;
+  top:70px !important;
+  width:58px !important;
+  height:46px !important;
+  font-size:1.18rem !important;
+}
+
+/* Keep the form slide compact */
+.begin-title{
+  font-size:clamp(2.1rem,3.4vw,3.6rem) !important;
+}
+
+.form-card{
+  padding-top:28px !important;
+  padding-bottom:24px !important;
+}
+
+/* Laptop/projector safety */
+@media(max-width:1200px){
+  .test-layout{
+    grid-template-columns:1.32fr .68fr !important;
+  }
+  .question-text{
+    font-size:clamp(1.22rem,1.7vw,1.82rem) !important;
+  }
+  .choice-button{
+    font-size:1rem !important;
+    min-height:48px !important;
+    padding:11px 13px !important;
+  }
+  .geometry-stage{
+    height:190px !important;
+  }
+  .io-stage{
+    height:165px !important;
+  }
+}
+
+  
+/* =========================================================
+   OPENING SCREEN PROJECTOR FIT FIX
+   Smaller title and one-line Practice Test
+   ========================================================= */
+
+.main-card{
+  padding-top:34px !important;
+  padding-bottom:34px !important;
+}
+
+.main-card h1{
+  font-size:clamp(3.4rem,6vw,6.2rem) !important;
+  line-height:1.02 !important;
+  margin-top:4px !important;
+}
+
+.main-card .title-highlight{
+  white-space:nowrap !important;
+  display:block !important;
+}
+
+.main-card .subtitle{
+  font-size:clamp(1.15rem,1.6vw,1.55rem) !important;
+  margin-top:18px !important;
+  max-width:920px !important;
+}
+
+.main-card .info-row{
+  margin-top:24px !important;
+}
+
+.main-card .info-box{
+  padding:16px 14px !important;
+  font-size:1.05rem !important;
+}
+
+.main-card .info-box span{
+  font-size:.82rem !important;
+}
+
+.main-card .start-button{
+  margin-top:24px !important;
+}
+
+@media(max-width:1200px){
+  .main-card h1{
+    font-size:clamp(3rem,5.4vw,5.4rem) !important;
+  }
+
+  .main-card .subtitle{
+    font-size:1.15rem !important;
+  }
+
+  .main-card .info-row{
+    margin-top:18px !important;
+  }
+
+  .main-card .start-button{
+    margin-top:18px !important;
+  }
+}
+
+  
+/* =========================================================
+   QUESTION FONT WEIGHT FIX
+   Less bold question text for better readability
+   ========================================================= */
+
+.question-text{
+  font-weight:600 !important;
+}
+
+.question-text mjx-container{
+  font-weight:600 !important;
+}
+
+.panel-label{
+  font-weight:800 !important;
+}
+
+.choice-button{
+  font-weight:700 !important;
+}
+
+.choice-letter{
+  font-weight:800 !important;
+}
+
   </style>
   <script>window.MathJax={tex:{inlineMath:[["$","$"]]},svg:{fontCache:"global"}};</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
@@ -37,7 +449,8 @@
   <script>
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby7wwU6aSz00bnTL_tSgPDtboxD4x-vvc2BJ5IRHNaFHNC2KVX81vrIsfqAiyx-vA08Aw/exec";
     const M = s => `$${s}$`;
-    const FR = (top, bottom) => `\\frac{${top}}{${bottom}}`;
+    const FR = (top,bottom) => `\\frac{${top}}{${bottom}}`;
+
     let studentInfo={firstName:"",lastName:""};
     let testData={score:0,total:40,percentage:0};
     let testTimer=null,floatingMathTimer=null,timeRemaining=2*60*60,testClosed=false,currentQuestionIndex=0,randomizedQuestions=[],studentAnswers=[];
@@ -51,6 +464,7 @@
       {type:"translate",q:`Write this sentence as an algebraic expression: half of a number ${M("x")} added to one third of another number ${M("y")}.`,choices:[M(FR("x+y","2")),M(`${FR("x","2")}+${FR("y","3")}`),M(`${FR("x","3")}+${FR("y","2")}`),M(FR("x+y","3"))],answer:M(`${FR("x","2")}+${FR("y","3")}`)},
       {type:"translate",q:`Write this sentence as an algebraic expression: the product of a number ${M("x")} and its successor.`,choices:[M("x(x+1)"),M("x(x-1)"),M("(x+1)^2"),M("2x+1")],answer:M("x(x+1)")},
       {type:"translate",q:`The sum of a number ${M("x")} and ${M("8")} is divided by ${M("3")}. Write an expression for this situation.`,choices:[M(FR("x+8","3")),M(`${FR("x","3")}+8`),M("3(x+8)"),M("3x+8")],answer:M(FR("x+8","3"))},
+
       {type:"substitution",q:`Find the value of ${M("|3x-2|")} when ${M("x=5")}.`,choices:[M("11"),M("12"),M("13"),M("17")],answer:M("13")},
       {type:"substitution",q:`What is the value of ${M("6x+4")} when ${M("x=0{,}5")}?`,choices:[M("5"),M("6"),M("7"),M("8")],answer:M("7")},
       {type:"substitution",q:`What is the value of ${M("4x+3")} when ${M(`x=${FR("1","2")}`)}?`,choices:[M("4"),M("5"),M("6"),M("7")],answer:M("5")},
@@ -59,12 +473,14 @@
       {type:"substitution",q:`Evaluate ${M(`${FR("x","2")}+5`)} when ${M("x=1{,}5")}.`,choices:[M("5{,}75"),M("6{,}25"),M("7{,}5"),M("8")],answer:M("5{,}75")},
       {type:"substitution",q:`Evaluate ${M(FR("2x+y","5"))} when ${M(`x=${FR("5","2")}`)} and ${M("y=5")}.`,choices:[M("1"),M("2"),M("3"),M("4")],answer:M("2")},
       {type:"substitution",q:`The formula to convert Celsius to Fahrenheit is ${M(`F=${FR("9","5")}C+32`)}. Find ${M("F")} when ${M("C=20")}.`,choices:[M("52"),M("60"),M("68"),M("72")],answer:M("68")},
+
       {type:"inputOutput",inputLatex:M("x=4"),ruleLatex:M("3x+2"),q:"What is the output?",choices:[M("10"),M("12"),M("14"),M("16")],answer:M("14")},
       {type:"inputOutput",inputLatex:M("x=12"),ruleLatex:M(`${FR("x","3")}-1`),q:"What is the output?",choices:[M("2"),M("3"),M("4"),M("5")],answer:M("3")},
       {type:"inputOutput",inputLatex:M("x=5, y=4"),ruleLatex:M("2x+y"),q:"What is the output?",choices:[M("12"),M("13"),M("14"),M("15")],answer:M("14")},
       {type:"inputOutput",inputLatex:M("x=3, y=6"),ruleLatex:M(FR("x+y","3")),q:"What is the output?",choices:[M("2"),M("3"),M("4"),M("5")],answer:M("3")},
       {type:"inputOutput",inputLatex:M("x=7"),ruleLatex:M("2(x-1)"),q:"What is the output?",choices:[M("10"),M("12"),M("14"),M("16")],answer:M("12")},
       {type:"inputOutput",inputLatex:M("x=8"),ruleLatex:M(`${FR("x","2")}+4`),q:"What is the output?",choices:[M("6"),M("7"),M("8"),M("9")],answer:M("8")},
+
       {type:"geometryWordProblem",shape:"triangle",labels:[M("2x"),M("3x+1"),M("2x+3")],q:`The sides of a triangle are ${M("2x")}, ${M("3x+1")}, and ${M("2x+3")}. Find the perimeter when ${M("x=2")}.`,choices:[M("16"),M("18"),M("20"),M("22")],answer:M("18")},
       {type:"geometryWordProblem",shape:"triangle",labels:[M("x+4"),M("2x+1"),M("3x-2")],q:`The sides of a triangle are ${M("x+4")}, ${M("2x+1")}, and ${M("3x-2")}. Find the perimeter when ${M("x=3")}.`,choices:[M("18"),M("19"),M("21"),M("24")],answer:M("21")},
       {type:"geometryWordProblem",shape:"rectangle",labels:[M("3x+2"),M("4x-3")],q:`The dimensions of a rectangle are ${M("3x+2")} and ${M("4x-3")}. Find the perimeter when ${M("x=4")}.`,choices:[M("48"),M("52"),M("54"),M("58")],answer:M("54")},
@@ -73,6 +489,7 @@
       {type:"geometryWordProblem",shape:"rectangle",labels:[M("2x+4"),M("x+6")],q:`The dimensions of a rectangle are ${M("2x+4")} and ${M("x+6")}. Find the area when ${M("x=5")}.`,choices:[M("140"),M("154"),M("168"),M("180")],answer:M("154")},
       {type:"geometryWordProblem",shape:"rectangle",labels:[M("x+5"),M("2x+1")],q:`The dimensions of a rectangle are ${M("x+5")} and ${M("2x+1")}. Find the area when ${M("x=3")}.`,choices:[M("48"),M("54"),M("56"),M("63")],answer:M("56")},
       {type:"geometryWordProblem",shape:"rectangle",labels:[M("2x+1"),M("3x")],q:`The dimensions of a rectangle are ${M("2x+1")} and ${M("3x")}. Find the perimeter when ${M("x=4")}.`,choices:[M("38"),M("40"),M("42"),M("44")],answer:M("42")},
+
       {type:"simplify",q:`Simplify the algebraic expression: ${M("5a-2a+7")}.`,choices:[M("3a+7"),M("7a+7"),M("3a-7"),M("10a")],answer:M("3a+7")},
       {type:"simplify",q:`Simplify the algebraic expression: ${M("7m-3+2m+8")}.`,choices:[M("9m+5"),M("9m-11"),M("5m+5"),M("14m+5")],answer:M("9m+5")},
       {type:"simplify",q:`Simplify the algebraic expression: ${M("6x+4-2x+9")}.`,choices:[M("4x+13"),M("8x+13"),M("4x+5"),M("8x+5")],answer:M("4x+13")},
@@ -89,96 +506,29 @@
     function backgroundHTML(){return `<div class="animated-bg" id="animatedBg"><div class="grid"></div><div class="equation-stream" style="top:18%;font-size:2.2rem;animation-duration:24s;">x + 7 = 15 &nbsp;&nbsp; 3a - 5 = 10 &nbsp;&nbsp; y = 2x + 1 &nbsp;&nbsp; 4m + 8 = 20 &nbsp;&nbsp;</div><div class="equation-stream" style="top:74%;font-size:1.8rem;animation-duration:30s;animation-direction:reverse;">2x = 18 &nbsp;&nbsp; p ÷ 4 = 6 &nbsp;&nbsp; n - 12 = 9 &nbsp;&nbsp; 5k + 3 = 28 &nbsp;&nbsp;</div><div class="orb" style="width:260px;height:260px;top:8%;left:12%;animation-duration:4.5s;"></div><div class="orb" style="width:340px;height:340px;bottom:2%;right:8%;animation-duration:5.8s;"></div><div class="orb" style="width:180px;height:180px;top:48%;right:20%;animation-duration:3.8s;"></div></div><div class="corner-equation eq1">2x + 5 = 17</div><div class="corner-equation eq2">y = 3x - 4</div><div class="corner-equation eq3">a + b = c</div><div class="corner-equation eq4">x &lt; 9</div><div class="footer">© 2026 Delta Matemática | Luis Ramos Jr. All Rights Reserved.</div>`}
     function startFloatingMath(){clearInterval(floatingMathTimer);const bg=document.getElementById("animatedBg");if(!bg)return;function createFloatingMath(){const item=document.createElement("div");item.className="math-symbol";item.textContent=symbols[Math.floor(Math.random()*symbols.length)];item.style.left=Math.random()*100+"vw";item.style.fontSize=(22+Math.random()*42)+"px";item.style.animationDuration=(10+Math.random()*16)+"s";item.style.animationDelay=(-Math.random()*12)+"s";bg.appendChild(item);setTimeout(()=>{if(item&&item.parentNode)item.remove()},26000)}for(let i=0;i<28;i++)createFloatingMath();floatingMathTimer=setInterval(createFloatingMath,1100)}
     function renderOpeningScreen(){document.getElementById("app").innerHTML=`${backgroundHTML()}<section class="main-card"><div class="top-label">7° Grade Mathematics</div><h1>Algebra<span class="title-highlight">Practice Test</span></h1><p class="subtitle">Strengthen your algebra skills through variables, expressions, substitution, input-output models, and geometry word problems.</p><div class="info-row"><div class="info-box"><span>Level</span>Grade 7</div><div class="info-box"><span>Topic</span>Algebra</div><div class="info-box"><span>Format</span>Practice Test</div></div><button class="start-button" onclick="showStudentForm()">Start Test</button></section>`;startFloatingMath()}
-    function showStudentForm(){document.getElementById("app").innerHTML=`${backgroundHTML()}<section class="form-card"><div class="top-label">Student Information</div><h2>Before You Begin</h2><p class="note">Please enter your information carefully. Your first name, last name, score, and percentage will be collected when you finish the practice test.</p><div class="form-grid"><div class="input-group"><label for="firstName">First Name</label><input id="firstName" type="text" autocomplete="off" placeholder="Enter first name" /></div><div class="input-group"><label for="lastName">Last Name</label><input id="lastName" type="text" autocomplete="off" placeholder="Enter last name" /></div></div><div class="instruction-box"><h3>Instructions</h3><ul><li>This is a practice test designed for mastery in Grade 7 Algebra.</li><li>The test has 40 multiple-choice questions.</li><li>You need to complete all questions before submitting your answers.</li><li>You may move forward or backward to review and change your answers.</li><li>The time limit is 2 hours.</li><li>When the time is over, the test will automatically close and submit your current work.</li></ul><div class="timer-badge">Time Limit: 2 Hours</div></div><button class="small-button" onclick="beginPracticeTest()">Begin</button></section>`;startFloatingMath()}
-    function beginPracticeTest(){
-      const firstName=document.getElementById("firstName").value.trim().toUpperCase();
-      const lastName=document.getElementById("lastName").value.trim().toUpperCase();
-      if(!firstName||!lastName){alert("Please enter both First Name and Last Name.");return}
-      studentInfo.firstName=firstName;
-      studentInfo.lastName=lastName;
-      testClosed=false;
-      timeRemaining=2*60*60;
-      try{
-        randomizedQuestions=buildBalancedRandomQuestions(questions);
-        if(!randomizedQuestions||randomizedQuestions.length===0){randomizedQuestions=shuffleArray(questions)}
-      }catch(error){
-        console.error("Randomizer error:",error);
-        randomizedQuestions=shuffleArray(questions);
-      }
-      studentAnswers=Array(randomizedQuestions.length).fill(null);
-      currentQuestionIndex=0;
-      startTwoHourTimer();
-      showQuestionScreen();
-    }
+    function showStudentForm(){document.getElementById("app").innerHTML=`${backgroundHTML()}<section class="form-card"><div class="top-label">Student Information</div><h2 class="begin-title">Before You Begin</h2><div class="form-grid"><div class="input-group"><label for="firstName">First Name</label><input id="firstName" type="text" autocomplete="off" placeholder="Enter first name" /></div><div class="input-group"><label for="lastName">Last Name</label><input id="lastName" type="text" autocomplete="off" placeholder="Enter last name" /></div></div><div class="instruction-box"><h3>Instructions</h3><ul><li>40 multiple-choice questions.</li><li>Answer all questions before submitting.</li><li>You may move forward or backward to review.</li><li>Time limit: 2 hours. The test submits automatically when time is over.</li></ul><div class="timer-badge">Time Limit: 2 Hours</div></div><button class="small-button" onclick="beginPracticeTest()">Begin</button></section>`;startFloatingMath()}
+    function beginPracticeTest(){const firstName=document.getElementById("firstName").value.trim().toUpperCase();const lastName=document.getElementById("lastName").value.trim().toUpperCase();if(!firstName||!lastName){alert("Please enter both First Name and Last Name.");return}studentInfo.firstName=firstName;studentInfo.lastName=lastName;testClosed=false;timeRemaining=2*60*60;try{randomizedQuestions=buildBalancedRandomQuestions(questions);if(!randomizedQuestions||randomizedQuestions.length===0){randomizedQuestions=shuffleArray(questions)}}catch(error){console.error("Randomizer error:",error);randomizedQuestions=shuffleArray(questions)}studentAnswers=Array(randomizedQuestions.length).fill(null);currentQuestionIndex=0;startTwoHourTimer();showQuestionScreen()}
     function showQuestionScreen(){const item=randomizedQuestions[currentQuestionIndex],selectedAnswer=studentAnswers[currentQuestionIndex],answeredCount=studentAnswers.filter(a=>a!==null).length;document.getElementById("app").innerHTML=`${backgroundHTML()}<section class="test-card"><div class="test-header"><div><div class="question-count">Question ${currentQuestionIndex+1} of ${randomizedQuestions.length}</div><div class="note" style="margin:6px 0 0;">Answered: ${answeredCount} of ${randomizedQuestions.length}</div></div><div class="timer-badge" id="timerDisplay">Time Left: 02:00:00</div></div><div class="test-layout"><div class="question-panel"><div class="panel-label">Question</div>${renderQuestionVisual(item)}<div class="question-text">${item.q}</div></div><div class="choices-panel"><div class="panel-label">Answer Choices</div>${item.choices.map((choice,index)=>`<button class="choice-button ${selectedAnswer===choice?"selected":""}" onclick="selectAnswer(${index})"><span class="choice-letter">${String.fromCharCode(65+index)}</span><span>${choice}</span></button>`).join("")}</div></div><div class="test-nav"><button class="nav-button" onclick="previousQuestion()" ${currentQuestionIndex===0?"disabled":""}>Back</button><button class="nav-button" onclick="nextQuestion()" ${currentQuestionIndex===randomizedQuestions.length-1?"disabled":""}>Next</button><button class="submit-button" onclick="submitTest()">Submit</button></div><div class="progress-strip">${randomizedQuestions.map((_,index)=>`<button class="progress-dot ${studentAnswers[index]!==null?"answered":""} ${index===currentQuestionIndex?"active":""}" onclick="goToQuestion(${index})">${index+1}</button>`).join("")}</div></section>`;startFloatingMath();updateTimerDisplay();typesetMath()}
     function typesetMath(){if(window.MathJax&&window.MathJax.typesetPromise){window.MathJax.typesetPromise().catch(error=>console.log(error))}}
     function renderInputOutputModel(item){if(item.type!=="inputOutput")return"";return`<div class="io-wrapper"><div class="io-title">Input – Output Model</div><div class="io-stage"><svg class="io-svg" viewBox="0 0 420 175" preserveAspectRatio="xMidYMid meet"><polygon points="16,56 72,56 108,86 72,116 16,116" fill="rgba(142,238,255,0.12)" stroke="rgba(142,238,255,0.90)" stroke-width="3"/><rect x="108" y="77" width="32" height="18" rx="6" fill="rgba(142,238,255,0.18)" stroke="rgba(142,238,255,0.90)" stroke-width="2.5"/><rect x="140" y="45" width="150" height="82" rx="9" fill="rgba(255,215,91,0.14)" stroke="rgba(255,215,91,0.95)" stroke-width="3"/><rect x="290" y="77" width="55" height="20" rx="8" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.85)" stroke-width="2.5"/><circle cx="374" cy="87" r="30" fill="rgba(255,215,91,0.12)" stroke="rgba(255,215,91,0.95)" stroke-width="3"/></svg><div class="io-caption input-cap">Input</div><div class="io-caption rule-cap">Expression</div><div class="io-caption output-cap">Output</div><div class="io-tag io-input">${item.inputLatex}</div><div class="io-tag io-rule">${item.ruleLatex}</div><div class="io-tag io-output">?</div></div></div>`}
     function renderGeometryFigure(item){if(item.type!=="geometryWordProblem")return"";if(item.shape==="triangle")return`<div class="geometry-box"><div class="io-title">Figure</div><div class="geometry-stage"><svg class="geom-svg" viewBox="0 0 420 220" preserveAspectRatio="xMidYMid meet"><polygon points="210,28 70,180 350,180" fill="rgba(255,255,255,0.04)" stroke="rgba(255,215,91,0.95)" stroke-width="4"/></svg><div class="geom-label" style="left:48px;top:98px;">${item.labels[0]}</div><div class="geom-label" style="right:48px;top:98px;">${item.labels[1]}</div><div class="geom-label" style="left:50%;bottom:12px;transform:translateX(-50%);">${item.labels[2]}</div></div></div>`;if(item.shape==="rectangle"){const isSquare=item.labels[0]===item.labels[1];if(isSquare){return`<div class="geometry-box"><div class="io-title">Figure</div><div class="geometry-stage"><svg class="geom-svg" viewBox="0 0 420 220" preserveAspectRatio="xMidYMid meet"><rect x="125" y="42" width="170" height="170" fill="rgba(255,255,255,0.04)" stroke="rgba(142,238,255,0.95)" stroke-width="4"/></svg><div class="geom-label" style="left:50%;top:8px;transform:translateX(-50%);">${item.labels[0]}</div></div></div>`}return`<div class="geometry-box"><div class="io-title">Figure</div><div class="geometry-stage"><svg class="geom-svg" viewBox="0 0 420 220" preserveAspectRatio="xMidYMid meet"><rect x="95" y="50" width="230" height="110" fill="rgba(255,255,255,0.04)" stroke="rgba(142,238,255,0.95)" stroke-width="4"/></svg><div class="geom-label" style="left:50%;top:12px;transform:translateX(-50%);">${item.labels[0]}</div><div class="geom-label" style="right:22px;top:50%;transform:translateY(-50%);">${item.labels[1]}</div></div></div>`}return""}
     function renderQuestionVisual(item){if(item.type==="inputOutput")return renderInputOutputModel(item);if(item.type==="geometryWordProblem")return renderGeometryFigure(item);return""}
     function shuffleArray(arr){const copy=[...arr];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}return copy}
-    function buildBalancedRandomQuestions(allQuestions){
-      const groups={};
-      allQuestions.forEach(q=>{
-        const type=q.type||"general";
-        if(!groups[type])groups[type]=[];
-        groups[type].push(q);
-      });
-      Object.keys(groups).forEach(type=>groups[type]=shuffleArray(groups[type]));
-      const result=[];
-      let lastType="";
-      while(result.length<allQuestions.length){
-        const availableTypes=Object.keys(groups).filter(type=>groups[type].length>0);
-        if(availableTypes.length===0)break;
-        let possibleTypes=availableTypes.filter(type=>type!==lastType);
-        if(possibleTypes.length===0)possibleTypes=availableTypes;
-        const chosenType=possibleTypes[Math.floor(Math.random()*possibleTypes.length)];
-        result.push(groups[chosenType].pop());
-        lastType=chosenType;
-      }
-      return result;
-    }
-    function selectAnswer(choiceIndex){
-      studentAnswers[currentQuestionIndex]=randomizedQuestions[currentQuestionIndex].choices[choiceIndex];
-      const allAnswered=studentAnswers.every(a=>a!==null);
-      const isLastQuestion=currentQuestionIndex===randomizedQuestions.length-1;
-      if(isLastQuestion&&allAnswered){showReviewSubmitScreen();return}
-      showQuestionScreen();
-    }
-    function previousQuestion(){if(currentQuestionIndex>0){currentQuestionIndex--;showQuestionScreen()}}function nextQuestion(){if(currentQuestionIndex<randomizedQuestions.length-1){currentQuestionIndex++;showQuestionScreen()}}function goToQuestion(index){currentQuestionIndex=index;showQuestionScreen()}
-    function submitTest(){
-      const unanswered=studentAnswers.findIndex(a=>a===null);
-      if(unanswered!==-1){
-        alert(`Please answer all questions before submitting. Question ${unanswered+1} is still unanswered.`);
-        currentQuestionIndex=unanswered;
-        showQuestionScreen();
-        return;
-      }
-      showReviewSubmitScreen();
-    }
-
-    function showReviewSubmitScreen(){
-      const answeredCount=studentAnswers.filter(a=>a!==null).length;
-      document.getElementById("app").innerHTML=`${backgroundHTML()}<section class="result-card"><div class="top-label">Review Before Submit</div><h2>All Questions Answered</h2><p class="note" style="font-size:1.15rem;font-weight:800;color:#8eeeff;">You answered ${answeredCount} out of ${randomizedQuestions.length} questions.</p><p class="note">You may review your answers before submitting. Once you submit, your score and percentage will be shown and prepared for collection.</p><div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px;"><button class="nav-button" onclick="currentQuestionIndex=0;showQuestionScreen();">Review Answers</button><button class="submit-button" onclick="finalSubmitTest()">Submit Test</button></div></section>`;
-      startFloatingMath();
-    }
-
-    function finalSubmitTest(){
-      clearInterval(testTimer);
-      let correct=0;
-      randomizedQuestions.forEach((q,i)=>{if(studentAnswers[i]===q.answer)correct++});
-      calculateScore(correct,randomizedQuestions.length);
-      showResultScreen();
-      submitScoreToGoogleSheets();
-    }
-    function startTwoHourTimer(){clearInterval(testTimer);testTimer=setInterval(()=>{if(testClosed){clearInterval(testTimer);return}timeRemaining--;updateTimerDisplay();if(timeRemaining<=0)autoCloseTest()},1000)}function updateTimerDisplay(){const d=document.getElementById("timerDisplay");if(!d)return;const h=Math.floor(timeRemaining/3600),m=Math.floor((timeRemaining%3600)/60),s=timeRemaining%60;d.textContent=`Time Left: ${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`}
-    function autoCloseTest(){if(testClosed)return;testClosed=true;clearInterval(testTimer);let correct=0;randomizedQuestions.forEach((q,i)=>{if(studentAnswers[i]===q.answer)correct++});calculateScore(correct,randomizedQuestions.length);submitScoreToGoogleSheets();showTimeOverScreen()}function showTimeOverScreen(){document.getElementById("app").innerHTML=`${backgroundHTML()}<section class="result-card"><div class="top-label">Time Over</div><h2>Test Closed</h2><p class="note" style="font-size:1.2rem;font-weight:800;color:#ffd75b;">The 2-hour time limit is over.</p><p class="note">Your current work has been automatically submitted. This test screen is now closed.</p></section>`;startFloatingMath()}
-    function calculateScore(correctAnswers,totalQuestions){testData.score=correctAnswers;testData.total=totalQuestions;testData.percentage=Math.round((correctAnswers/totalQuestions)*100)}async function submitScoreToGoogleSheets(){const payload={firstName:studentInfo.firstName,lastName:studentInfo.lastName,score:testData.score,percentage:testData.percentage};console.log("Score data prepared:",payload);if(!GOOGLE_SCRIPT_URL){console.warn("Google Script URL is empty. Paste your Google Apps Script Web App URL into GOOGLE_SCRIPT_URL when ready.");return}try{await fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});console.log("Score submitted to Google Sheets.")}catch(error){console.error("Score submission failed:",error)}}
-    function showResultScreen(){
-      const remark=testData.percentage>=70?"CONGRATULATIONS":"TRY AGAIN";
-      const remarkColor=testData.percentage>=70?"#ffd75b":"#ff9b9b";
-      document.getElementById("app").innerHTML=`${backgroundHTML()}<section class="result-card"><div class="top-label">Result</div><div class="student-name-result">Student: ${studentInfo.firstName} ${studentInfo.lastName}</div><div class="result-number">${testData.score} / ${testData.total}</div><p class="note" style="font-size:1.8rem;font-weight:950;color:#8eeeff;">Percentage: ${testData.percentage}%</p><p class="note" style="font-size:2.25rem;font-weight:950;color:${remarkColor};letter-spacing:1.5px;text-transform:uppercase;">${remark}</p><p class="note">Your First Name, Last Name, Score, and Percentage are now prepared for collection.</p><button class="small-button" onclick="renderOpeningScreen()">Back to Opening</button></section>`;
-      startFloatingMath();
-    }
+    function buildBalancedRandomQuestions(allQuestions){const groups={};allQuestions.forEach(q=>{const type=q.type||"general";if(!groups[type])groups[type]=[];groups[type].push(q)});Object.keys(groups).forEach(type=>groups[type]=shuffleArray(groups[type]));const result=[];let lastType="";while(result.length<allQuestions.length){const availableTypes=Object.keys(groups).filter(type=>groups[type].length>0);if(availableTypes.length===0)break;let possibleTypes=availableTypes.filter(type=>type!==lastType);if(possibleTypes.length===0)possibleTypes=availableTypes;const chosenType=possibleTypes[Math.floor(Math.random()*possibleTypes.length)];result.push(groups[chosenType].pop());lastType=chosenType}return result}
+    function selectAnswer(choiceIndex){studentAnswers[currentQuestionIndex]=randomizedQuestions[currentQuestionIndex].choices[choiceIndex];const allAnswered=studentAnswers.every(a=>a!==null);const isLastQuestion=currentQuestionIndex===randomizedQuestions.length-1;if(isLastQuestion&&allAnswered){showReviewSubmitScreen();return}showQuestionScreen()}
+    function previousQuestion(){if(currentQuestionIndex>0){currentQuestionIndex--;showQuestionScreen()}}
+    function nextQuestion(){if(currentQuestionIndex<randomizedQuestions.length-1){currentQuestionIndex++;showQuestionScreen()}}
+    function goToQuestion(index){currentQuestionIndex=index;showQuestionScreen()}
+    function submitTest(){const unanswered=studentAnswers.findIndex(a=>a===null);if(unanswered!==-1){alert(`Please answer all questions before submitting. Question ${unanswered+1} is still unanswered.`);currentQuestionIndex=unanswered;showQuestionScreen();return}showReviewSubmitScreen()}
+    function showReviewSubmitScreen(){const answeredCount=studentAnswers.filter(a=>a!==null).length;document.getElementById("app").innerHTML=`${backgroundHTML()}<section class="result-card"><div class="top-label">Review Before Submit</div><h2>All Questions Answered</h2><p class="note" style="font-size:1.6rem;font-weight:800;color:#8eeeff;">You answered ${answeredCount} out of ${randomizedQuestions.length} questions.</p><p class="note">You may review your answers before submitting. Once you submit, your score and percentage will be shown and prepared for collection.</p><div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px;"><button class="nav-button" onclick="currentQuestionIndex=0;showQuestionScreen();">Review Answers</button><button class="submit-button" onclick="finalSubmitTest()">Submit Test</button></div></section>`;startFloatingMath()}
+    function finalSubmitTest(){clearInterval(testTimer);let correct=0;randomizedQuestions.forEach((q,i)=>{if(studentAnswers[i]===q.answer)correct++});calculateScore(correct,randomizedQuestions.length);showResultScreen();submitScoreToGoogleSheets()}
+    function startTwoHourTimer(){clearInterval(testTimer);testTimer=setInterval(()=>{if(testClosed){clearInterval(testTimer);return}timeRemaining--;updateTimerDisplay();if(timeRemaining<=0)autoCloseTest()},1000)}
+    function updateTimerDisplay(){const d=document.getElementById("timerDisplay");if(!d)return;const h=Math.floor(timeRemaining/3600),m=Math.floor((timeRemaining%3600)/60),s=timeRemaining%60;d.textContent=`Time Left: ${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`}
+    function autoCloseTest(){if(testClosed)return;testClosed=true;clearInterval(testTimer);let correct=0;randomizedQuestions.forEach((q,i)=>{if(studentAnswers[i]===q.answer)correct++});calculateScore(correct,randomizedQuestions.length);submitScoreToGoogleSheets();showTimeOverScreen()}
+    function showTimeOverScreen(){document.getElementById("app").innerHTML=`${backgroundHTML()}<section class="result-card"><div class="top-label">Time Over</div><h2>Test Closed</h2><p class="note" style="font-size:1.8rem;font-weight:800;color:#ffd75b;">The 2-hour time limit is over.</p><p class="note">Your current work has been automatically submitted. This test screen is now closed.</p></section>`;startFloatingMath()}
+    function calculateScore(correctAnswers,totalQuestions){testData.score=correctAnswers;testData.total=totalQuestions;testData.percentage=Math.round((correctAnswers/totalQuestions)*100)}
+    async function submitScoreToGoogleSheets(){const payload={firstName:studentInfo.firstName,lastName:studentInfo.lastName,score:testData.score,percentage:testData.percentage};console.log("Score data prepared:",payload);if(!GOOGLE_SCRIPT_URL){console.warn("Google Script URL is empty. Paste your Google Apps Script Web App URL into GOOGLE_SCRIPT_URL when ready.");return}try{await fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});console.log("Score submitted to Google Sheets.")}catch(error){console.error("Score submission failed:",error)}}
+    function showResultScreen(){const remark=testData.percentage>=70?"CONGRATULATIONS":"TRY AGAIN";const remarkColor=testData.percentage>=70?"#ffd75b":"#ff9b9b";document.getElementById("app").innerHTML=`${backgroundHTML()}<section class="result-card"><div class="top-label">Result</div><div class="student-name-result">Student: ${studentInfo.firstName} ${studentInfo.lastName}</div><div class="result-number">${testData.score} / ${testData.total}</div><p class="note" style="font-size:2rem!important;font-weight:950;color:#8eeeff;">Percentage: ${testData.percentage}%</p><p class="note" style="font-size:2.6rem!important;font-weight:950;color:${remarkColor};letter-spacing:1.5px;text-transform:uppercase;">${remark}</p><p class="note">Your First Name, Last Name, Score, and Percentage are now prepared for collection.</p><button class="small-button" onclick="renderOpeningScreen()">Back to Opening</button></section>`;startFloatingMath()}
     renderOpeningScreen();
   </script>
 </body>
